@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: const Color(0xFF0A1E3F), // Bleu foncé profond (fond)
       appBar: AppBar(
         title: const Text(
-          'UNDERCOVER CHRÉTIEN',
+          "L'APOSTAT",
           style: TextStyle(
             color: Color(0xFFFDF6E3), // Blanc crème (texte)
           ),

@@ -23,40 +23,36 @@ class _GameScreenState extends State<GameScreen> {
     assignRoles();
   }
 
-  void assignRoles() {
-    final availablePairs = wordPairs.where((pair) =>
-      !widget.gameState.usedPairs.any((used) => used[0] == pair[0] && used[1] == pair[1])
-    ).toList();
+void assignRoles() {
+  final availablePairs = wordPairs.where((pair) =>
+    !widget.gameState.usedPairs.any((used) => used[0] == pair[0] && used[1] == pair[1])
+  ).toList();
 
-    if (availablePairs.isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Plus de paires disponibles.'))
-        );
-      });
-      return;
-    }
-
-    final pair = availablePairs[Random().nextInt(availablePairs.length)];
-    widget.gameState.usedPairs.add(pair);
-
-    int undercoverCount = widget.gameState.players.length >= 6 ? 2 : 1;
-
-    List<Player> players = widget.gameState.players;
-    players.shuffle();
-
-    final undercoverPlayers = players.sublist(0, undercoverCount);
-
-    for (var player in players) {
-      if (undercoverPlayers.contains(player)) {
-        player.role = pair[1];
-        player.isUndercover = true;
-      } else {
-        player.role = pair[0];
-        player.isUndercover = false;
-      }
-    }
+  if (availablePairs.isEmpty) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Plus de paires disponibles.'))
+      );
+    });
+    return;
   }
+
+  final pair = availablePairs[Random().nextInt(availablePairs.length)];
+  widget.gameState.usedPairs.add(pair);
+
+  int undercoverCount = widget.gameState.players.length >= 6 ? 2 : 1;
+
+  // 👇 Distribution équitable et aléatoire des rôles SANS toucher à l’ordre des joueurs
+  List<Player> players = widget.gameState.players;
+  List<bool> isUndercoverFlags = List.generate(players.length, (index) => index < undercoverCount);
+  isUndercoverFlags.shuffle();
+
+  for (int i = 0; i < players.length; i++) {
+    players[i].isUndercover = isUndercoverFlags[i];
+    players[i].role = players[i].isUndercover ? pair[1] : pair[0];
+  }
+}
+
 
   void nextPlayer() {
     if (currentIndex < widget.gameState.players.length - 1) {
@@ -179,7 +175,7 @@ class _GameScreenState extends State<GameScreen> {
                                 const SizedBox(height: 10),
                                 if (player.isUndercover)
                                   Text(
-                                    '(Undercover)',
+                                    '(Apostat)',
                                     style: TextStyle(
                                       color: Colors.red[200],
                                       fontStyle: FontStyle.italic,

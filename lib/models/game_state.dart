@@ -4,7 +4,7 @@ class GameState {
   List<Player> players;
   int round;
   int startIndex;
-  List<List<String>> usedPairs = []; // Ajout ici ✅
+  List<List<String>> usedPairs = [];
 
   GameState({required this.players, this.round = 0, this.startIndex = 0});
 

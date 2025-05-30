@@ -35,13 +35,7 @@ class ScoreScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: Color(0xFFD4AF37)),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/parchment_texture.png'), // Optionnel
-            opacity: 0.05,
-            fit: BoxFit.cover,
-          ),
-        ),
+       
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

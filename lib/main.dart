@@ -9,7 +9,7 @@ class UndercoverApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Undercover Chrétien',
+      title: "L'Apostat",
       theme: ThemeData(primarySwatch: Colors.green),
       home: HomeScreen(),
     );
