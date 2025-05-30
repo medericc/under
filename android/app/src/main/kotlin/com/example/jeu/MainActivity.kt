@@ -1,4 +1,4 @@
-package com.example.jeu
+package com.medericc.apostat
 
 import io.flutter.embedding.android.FlutterActivity
 

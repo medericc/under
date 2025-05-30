@@ -8,7 +8,7 @@
 PRODUCT_NAME = jeu
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.jeu
+PRODUCT_BUNDLE_IDENTIFIER = com.medericc.apostat
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 com.medericc. All rights reserved.

@@ -5,18 +5,71 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Undercover Chrétien')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Bienvenue !\n\n- 4 à 8 joueurs\n- Règles rapides\n- Premier à 25 points gagne', textAlign: TextAlign.center),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: Text('Commencer'),
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PlayerInputScreen())),
-            ),
-          ],
+      backgroundColor: const Color(0xFF0A1E3F), // Bleu foncé profond (fond)
+      appBar: AppBar(
+        title: const Text(
+          'UNDERCOVER CHRÉTIEN',
+          style: TextStyle(
+            color: Color(0xFFFDF6E3), // Blanc crème (texte)
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color(0xFF1B263B), // AppBar
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Color(0xFFD4AF37)), // Doré (icônes)
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Card(
+                color: const Color(0xFF1B263B).withOpacity(0.7),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  side: const BorderSide(color: Color(0xFFD4AF37)),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    'Bienvenue !\n\n⚠️ Un ou deux intrus se cachent...\n👀 Démasquez-les avant qu’ils ne vous piégent !\n⛪ 4 à 8 joueurs – 25 points pour gagner',
+                    style: TextStyle(
+                      color: Color(0xFFFAF3E0),
+                      fontSize: 16,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => PlayerInputScreen()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFD4AF37), // Doré
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  shadowColor: const Color(0xFF000000).withOpacity(0.3),
+                ),
+                child: const Text(
+                  'COMMENCER',
+                  style: TextStyle(
+                    color: Color(0xFF0A1E3F), // Bleu foncé (texte)
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
