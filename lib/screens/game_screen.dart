@@ -29,7 +29,6 @@ void assignRoles() {
   ).toList();
 
   if (availablePairs.isEmpty) {
-    // Plus de paires dispo — gère ça comme tu veux
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('Plus de paires disponibles.'))
     );
@@ -37,19 +36,23 @@ void assignRoles() {
   }
 
   final pair = availablePairs[Random().nextInt(availablePairs.length)];
-  widget.gameState.usedPairs.add(pair); // Marque cette paire comme utilisée ✅
+  widget.gameState.usedPairs.add(pair);
 
   int undercoverCount = widget.gameState.players.length >= 6 ? 2 : 1;
-  List<Player> players = widget.gameState.players;
 
+  List<Player> players = widget.gameState.players;
   players.shuffle();
-  for (int i = 0; i < players.length; i++) {
-    if (i < undercoverCount) {
-      players[i].role = pair[1]; // undercover word
-      players[i].isUndercover = true;
+
+  // Prend N undercover aléatoirement
+  final undercoverPlayers = players.sublist(0, undercoverCount);
+
+  for (var player in players) {
+    if (undercoverPlayers.contains(player)) {
+      player.role = pair[1]; // mot Undercover
+      player.isUndercover = true;
     } else {
-      players[i].role = pair[0]; // villageois word
-      players[i].isUndercover = false;
+      player.role = pair[0]; // mot Villageois
+      player.isUndercover = false;
     }
   }
 }

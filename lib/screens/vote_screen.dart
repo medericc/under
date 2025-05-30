@@ -23,36 +23,73 @@ void checkGameState() {
   int undercoverCount = widget.gameState.players.where((p) => p.isUndercover && !p.isEliminated).length;
   int villageCount = widget.gameState.players.where((p) => !p.isUndercover && !p.isEliminated).length;
 
+  bool victory = false;
+
   if (undercoverCount == 0) {
     widget.gameState.players.forEach((p) {
       if (!p.isUndercover) p.score += 1;
     });
-  } else if ((undercoverCount >= 1 && widget.gameState.players.where((p) => !p.isEliminated).length <= 2) || (villageCount == 0)) {
+    victory = true;
+  } else if ((undercoverCount >= 1 && widget.gameState.players.where((p) => !p.isEliminated).length <= 2)
+      || (villageCount == 0)) {
     widget.gameState.players.forEach((p) {
       if (p.isUndercover) p.score += 2;
     });
+    victory = true;
   } else {
     votes.clear();
     return;
   }
 
   bool hasWinner = widget.gameState.players.any((p) => p.score >= 25);
+
   if (hasWinner) {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => ScoreScreen(gameState: widget.gameState)),
     );
-  } else {
-    // Réinitialise les statuts pour le prochain tour
-    widget.gameState.players.forEach((p) => p.isEliminated = false);
-    widget.gameState.nextRound();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => GameScreen(gameState: widget.gameState)),
-    );
+  } else if (victory) {
+    // Affiche les scores intermédiaires dans une modale
+    showRoundRankingDialog();
   }
 }
 
+void showRoundRankingDialog() {
+  final rankedPlayers = [...widget.gameState.players]
+    ..sort((a, b) => b.score.compareTo(a.score));
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) {
+      return AlertDialog(
+        title: Text('Classement après ce tour'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: rankedPlayers
+              .map((p) => Text('${p.name}: ${p.score} points'))
+              .toList(),
+        ),
+        actions: [
+          ElevatedButton(
+            child: Text('Continuer'),
+            onPressed: () {
+              Navigator.of(context).pop(); // Ferme le dialog
+              // Réinitialise les statuts pour le nouveau tour
+              widget.gameState.players.forEach((p) => p.isEliminated = false);
+              widget.gameState.nextRound();
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => GameScreen(gameState: widget.gameState)),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
 
 void finishVoting() {
