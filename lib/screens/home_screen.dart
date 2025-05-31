@@ -5,19 +5,27 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0A1E3F), // Bleu foncé profond (fond)
-      appBar: AppBar(
-        title: const Text(
-          "L'APOSTAT",
-          style: TextStyle(
-            color: Color(0xFFFDF6E3), // Blanc crème (texte)
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1B263B), // AppBar
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Color(0xFFD4AF37)), // Doré (icônes)
-      ),
+      backgroundColor: const Color(0xFF1B263B), // Bleu foncé profond (fond)
+   appBar: AppBar(
+  backgroundColor: const Color(0xFFD4AF37),
+  elevation: 0,
+  centerTitle: true,
+  iconTheme: const IconThemeData(color: Color(0xFF0A1E3F)),
+  toolbarHeight: 80, // Hauteur personnalisée
+  title: const Text(
+    "L'APOSTAT",
+    style: TextStyle(
+      color: Color(0xFF0A1E3F),
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+),
+
+  
+
+
+
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Center(

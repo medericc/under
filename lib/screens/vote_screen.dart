@@ -175,7 +175,7 @@ class _VoteScreenState extends State<VoteScreen> {
 
     var eliminatedPlayer = widget.gameState.players.firstWhere((p) => p.name == eliminated);
     bool wasUndercover = eliminatedPlayer.isUndercover;
-    String displayedRole = wasUndercover ? 'Undercover' : 'Villageois';
+    String displayedRole = wasUndercover ? 'Undercover' : 'Fidèle';
 
     setState(() {
       eliminatedPlayer.isEliminated = true;
@@ -265,7 +265,7 @@ class _VoteScreenState extends State<VoteScreen> {
       backgroundColor: Color(0xFF0A1E3F),
       appBar: AppBar(
         title: Text(
-          'CONSEIL DU VILLAGE',
+          'ASSEMBLÉE DES FIDÈLES',
           style: TextStyle(
             color: Color(0xFFD4AF37),
             fontFamily: 'Cinzel',
